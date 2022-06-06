@@ -4,36 +4,26 @@ import * as THREE from 'three'
 //scene
 const scene = new THREE.Scene()
 
-//objects
+//red cube
+const geometry = new THREE.BoxGeometry(1,1,1)
+const material = new THREE.MeshBasicMaterial({color: 'red'})
+const mesh = new THREE.Mesh(geometry, material)
+scene.add(mesh)
 
-const group = new THREE.Group()
-scene.add(group)
+// mesh.scale.x = 1
+// mesh.scale.y = 2
+// mesh.scale.z = 3
 
-const cube1 = new THREE.Mesh(
-    new THREE.BoxGeometry(1,1,1),
-    new THREE.MeshBasicMaterial({color: 'red'})
-)
-group.add(cube1)
+// mesh.scale.set(1, 2, 3)
 
-const cube2 = new THREE.Mesh(
-    new THREE.BoxGeometry(1,1,1),
-    new THREE.MeshBasicMaterial({color: 'blue'})
-)
-group.add(cube2)
+// mesh.position.x = 1
+// mesh.position.y = 2
+// mesh.position.z = 3
 
-cube2.position.x = 2 
+// mesh.position.set(1, 2, 3)
 
-const cube3 = new THREE.Mesh(
-    new THREE.BoxGeometry(1,1,1),
-    new THREE.MeshBasicMaterial({color: 'green'})
-)
-group.add(cube3)
-
-cube3.position.x = -2
-
-group.position.y = 1
-
-
+//rotation
+mesh.rotation.x = 3.14 //half a rotation
 
 //axes helper
 const axesHelper = new THREE.AxesHelper(2) //higher the number, larger the axis
@@ -48,8 +38,13 @@ const sizes = {
 //camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width/sizes.height) //fov, aspect ratio
 camera.position.z = 3
+camera.position.x = 1
 camera.position.y = 1
 scene.add(camera)
+
+camera.lookAt(mesh.position)
+
+// console.log(mesh.position.distanceTo(camera.position))
 
 //renderer
 const canvas = document.querySelector(".webgl")
