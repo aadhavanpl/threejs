@@ -1,58 +1,71 @@
 import './style.css'
 import * as THREE from 'three'
-import gsap from 'gsap'
 
-console.log(gsap)
+//cursor
+const cursor = {
+    x: 0,
+    y: 0
+}
+window.addEventListener('mousemove', (event) => {
+    cursor.x = event.clientX / sizes.width - 0.5  //the value will be from -0.5 to 0.5
+    cursor.y = event.clientY / sizes.height - 0.5  //the value will be from -0.5 to 0.5
+})
 
-//scene
-const scene = new THREE.Scene()
+// Canvas
+const canvas = document.querySelector('canvas.webgl')
 
-//red cube
-const geometry = new THREE.BoxGeometry(1,1,1)
-const material = new THREE.MeshBasicMaterial({color: 'red'})
-const mesh = new THREE.Mesh(geometry, material)
-scene.add(mesh)
-
-//sizes
+// Sizes
 const sizes = {
     width: 800,
     height: 600
 }
 
-//camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width/sizes.height) //fov, aspect ratio
+// Scene
+const scene = new THREE.Scene()
+
+// Object
+const mesh = new THREE.Mesh(
+    new THREE.BoxGeometry(1, 1, 1, 5, 5, 5),
+    new THREE.MeshBasicMaterial({ color: 0xff0000 })
+)
+scene.add(mesh)
+
+// Camera
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 1000) //fov, aspect ratio, min, ax
+camera.position.x = 2
+camera.position.y = 0
 camera.position.z = 3
-camera.position.x = 1
-camera.position.y = 1
+camera.lookAt(mesh.position)
 scene.add(camera)
 
-//renderer
-const canvas = document.querySelector(".webgl")
-console.log(canvas)
+// Renderer
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
-
 })
 renderer.setSize(sizes.width, sizes.height)
-renderer.render(scene, camera)
 
-// const clock = new THREE.Clock()
+// Animate
+const clock = new THREE.Clock()
 
+const tick = () =>
+{
+    const elapsedTime = clock.getElapsedTime()
 
-//animations
-const tick = () => {
+    // Update objects
+    // camera.position.x = cursor.x * -5
+    // camera.position.y = cursor.y * -5
+    // camera.lookAt(mesh.position)
     
-    // mesh.rotation.y+=0.001
-    
-    // console.log('tick')
-    
-    // const elapsedTime = clock.getElapsedTime()
-    // mesh.position.y = Math.sin(elapsedTime)
+    camera.position.x = Math.sin(cursor.x*Math.PI*2)*3
+    camera.position.z = Math.cos(cursor.x*Math.PI*2)*3
+    camera.position.y = cursor.y * 5
+    camera.lookAt(mesh.position)
+
+    // Render
     renderer.render(scene, camera)
+
+    // Call tick again on the next frame
     window.requestAnimationFrame(tick)
 }
-tick() 
 
-//animation using gsap
-gsap.to(mesh.position, {duration: 1, delay: 1, x: 2})
-gsap.to(mesh.position, {duration: 1, delay: 3, x: 0})
+tick()
