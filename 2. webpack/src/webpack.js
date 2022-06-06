@@ -10,24 +10,6 @@ const material = new THREE.MeshBasicMaterial({color: 'red'})
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
-// mesh.scale.x = 1
-// mesh.scale.y = 2
-// mesh.scale.z = 3
-
-// mesh.scale.set(1, 2, 3)
-
-// mesh.position.x = 1
-// mesh.position.y = 2
-// mesh.position.z = 3
-
-// mesh.position.set(1, 2, 3)
-
-//rotation
-mesh.rotation.x = 3.14 //half a rotation
-
-const axesHelper = new THREE.AxesHelper(2) //higher the number, larger the axis
-scene.add(axesHelper)
-
 //sizes
 const sizes = {
     width: 800,
@@ -40,10 +22,6 @@ camera.position.z = 3
 camera.position.x = 1
 camera.position.y = 1
 scene.add(camera)
-
-camera.lookAt(mesh.position)
-
-// console.log(mesh.position.distanceTo(camera.position))
 
 //renderer
 const canvas = document.querySelector(".webgl")
