@@ -1,8 +1,5 @@
 import './style.css'
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-
-console.log(THREE.OrbitControls)
 
 //cursor
 const cursor = {
@@ -38,15 +35,8 @@ const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 10
 camera.position.x = 2
 camera.position.y = 0
 camera.position.z = 3
-// camera.lookAt(mesh.position)
+camera.lookAt(mesh.position)
 scene.add(camera)
-
-//orbit controls
-const controls = new OrbitControls(camera, canvas) //camera, canvas(dom elemenet)
-// controls.target.y = 2
-// controls.update()
-controls.enableDamping = true
-
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -61,9 +51,16 @@ const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
 
-    //update orbit controls
-    controls.update()
+    // Update objects
+    // camera.position.x = cursor.x * -5
+    // camera.position.y = cursor.y * -5
+    // camera.lookAt(mesh.position)
     
+    camera.position.x = Math.sin(cursor.x*Math.PI*2)*3
+    camera.position.z = Math.cos(cursor.x*Math.PI*2)*3
+    camera.position.y = cursor.y * 5
+    camera.lookAt(mesh.position)
+
     // Render
     renderer.render(scene, camera)
 
