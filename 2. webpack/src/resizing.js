@@ -11,46 +11,17 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
-//object
-// const geometry = new THREE.BoxBufferGeometry(1, 1, 1, 2, 2, 2)
-
-//triangle
-const geometry = new THREE.Geometry()
-// const vertex1 = new THREE.Vector3(0, 0, 0)
-// geometry.vertices.push(vertex1)
-// const vertex2 = new THREE.Vector3(0, 1, 0)
-// geometry.vertices.push(vertex2)
-// const vertex3 = new THREE.Vector3(1, 0, 0)
-// geometry.vertices.push(vertex3)
-
-// const face = new THREE.Face3(0, 1, 2)
-// geometry.faces.push(face)
-
-// random triangles
-for(let i =0; i<50; i++) {
-    for(let j = 0; j< 3; j++) {
-        geometry.vertices.push(new THREE.Vector3(
-            Math.random(), //gives value from 0 to 1
-            Math.random(),
-            Math.random()
-        ))
-    }
-
-    const verticesIndex = i*3
-    geometry.faces.push(new THREE.Face3(
-        verticesIndex,
-        verticesIndex+1,
-        verticesIndex+2
-    ))
-}
-
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+/**
+ * Object
+ */
+const geometry = new THREE.BoxGeometry(1, 1, 1)
+const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
-
-
-//sizes
+/**
+ * Sizes
+ */
 const sizes = {
     width: window.innerWidth,
     height: window.innerHeight
@@ -119,4 +90,4 @@ const tick = () =>
     window.requestAnimationFrame(tick)
 }
 
-tick()  
+tick()
