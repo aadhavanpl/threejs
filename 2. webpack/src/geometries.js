@@ -1,23 +1,6 @@
 import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import { gsap } from 'gsap'
-
-
-const loadingManager = new THREE.LoadingManager(
-    //loading
-    () => {
-        gsap.to(overlayMaterial.uniforms.uAlpha, { duration: 3, value: 0 })
-        console.log('loaded')
-    },
-    //progress
-    () => {
-        console.log('progress')
-    }
-)
-const gltfLoader = new GLTFLoader(loadingManager)
-const cubeTextureLoader = new THREE.CubeTextureLoader(loadingManager)
 
 /**
  * Base
@@ -27,39 +10,6 @@ const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
-
-// overlay
-const overlayGeometry = new THREE.PlaneBufferGeometry(2, 2, 1, 1)
-const overlayMaterial = new THREE.ShaderMaterial({
-    transparent: true,
-    uniforms:
-    {
-        uAlpha: { value: 1 }
-    },
-    vertexShader: `
-        void main() {
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }    
-    `,
-    fragmentShader: `
-        void main() {
-            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
-        }
-    `
-})
-const overlay = new THREE.Mesh(overlayGeometry, overlayMaterial)
-scene.add(overlay)
-
-
-
-
-
-
-
-
-
-
-
 
 //object
 // const geometry = new THREE.BoxBufferGeometry(1, 1, 1, 2, 2, 2)
